@@ -213,3 +213,31 @@ const navigateTo = (path) => {
 const getCurrentPath = () => {
     return window.location.pathname;
 };
+const API_URL = "https://blog-platform-9npy.onrender.com";
+
+fetch(`${API_URL}/api/posts`)
+  .then(res => res.json())
+  .then(data => {
+    console.log(data);
+
+    const container = document.getElementById("posts");
+
+    if (!container) {
+      alert("No posts container found!");
+      return;
+    }
+
+    container.innerHTML = "";
+
+    data.forEach(post => {
+      const div = document.createElement("div");
+      div.innerHTML = `
+        <h3>${post.title}</h3>
+        <p>${post.content}</p>
+      `;
+      container.appendChild(div);
+    });
+  })
+  .catch(err => {
+    alert("Error: " + err.message);
+  });
