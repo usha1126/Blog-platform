@@ -52,7 +52,7 @@ app.use((error, req, res, next) => {
 });
 
 // Export app for Vercel
-module.exports = app;
+
 const PORT = process.env.PORT || 5000;
 
 app.listen(PORT, () => {
