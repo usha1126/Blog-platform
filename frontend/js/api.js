@@ -213,7 +213,7 @@ const navigateTo = (path) => {
 const getCurrentPath = () => {
     return window.location.pathname;
 };
-const API_URL = "https://blog-platform-9npy.onrender.com";
+const API_URL = "https://blog-platform-9npy.onrender.com/api";
 
 fetch(`${API_URL}/api/posts`)
   .then(res => res.json())
