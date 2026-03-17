@@ -17,20 +17,19 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Serve static files from frontend
-app.use(express.static(path.join(__dirname, '../frontend')));
+// Serve static files from frontend folder
+app.use(express.static(path.join(__dirname, 'frontend')));
 
-// Database connection
+// MongoDB connection
 mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/blog-platform', {
   useNewUrlParser: true,
-  useUnifiedTopology: true,
+  useUnifiedTopology: true
 })
 .then(() => {
   console.log('Connected to MongoDB');
 })
 .catch((error) => {
   console.error('MongoDB connection error:', error);
-  process.exit(1);
 });
 
 // API Routes
@@ -38,9 +37,9 @@ app.use('/api/auth', authRoutes);
 app.use('/api/posts', postRoutes);
 app.use('/api/comments', commentRoutes);
 
-// Serve frontend for all other routes (SPA fallback)
+// Serve frontend for all other routes
 app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, '../frontend/index.html'));
+  res.sendFile(path.join(__dirname, 'frontend', 'index.html'));
 });
 
 // Error handling middleware
@@ -52,10 +51,5 @@ app.use((error, req, res, next) => {
   });
 });
 
-// Start server
-const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
-});
-
+// Export app for Vercel
 module.exports = app;
